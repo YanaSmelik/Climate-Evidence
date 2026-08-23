@@ -1,0 +1,26 @@
+[
+    {
+        "year": 1950,
+        "seaLevelRise": 1.3
+    },
+      {
+        "year": 1952,
+        "seaLevelRise": 5.5
+    },
+     {
+        "year": 1953,
+        "seaLevelRise": 6.9
+    },
+     {
+        "year": 1954,
+        "seaLevelRise": 1.1
+    },
+     {
+        "year": 1955,
+        "seaLevelRise": 5.2
+    },
+     {
+        "year": 1956,
+        "seaLevelRise": 0.2
+    }
+]
