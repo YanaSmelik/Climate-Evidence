@@ -1,8 +1,8 @@
 import { useState } from "react";
-import globalCO2Data from "./data/globalCO2Data";
-import globalOceanTemperatureRise from "./data/globalOceanTemperatureRise";
-import globalSeaLevelRise from "./data/globalSeaLevelRise";
-import globalTemperatureRise from "./data/globalTemperatureRise";
+import globalCO2Data from "../data/globalCO2Data";
+import globalOceanTemperatureRise from "../data/globalOceanTemperatureRise";
+import globalSeaLevelRise from "../data/globalSeaLevelRise";
+import globalTemperatureRise from "../data/globalTemperatureRise";
 import Topics from "./Topics";
 
 function ClimateData() {

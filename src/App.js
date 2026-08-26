@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './Home';
-import ClimateData from './ClimateData';
-import Sources from './Sources';
+import Home from './components/Home';
+import ClimateData from './components/ClimateData';
+import Sources from './components/Sources';
 
 function App() {
   return (
