@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import globalCO2Data from "../data/globalCO2Data";
 import globalOceanTemperatureRise from "../data/globalOceanTemperatureRise";
 import globalSeaLevelRise from "../data/globalSeaLevelRise";
 import globalTemperatureRise from "../data/globalTemperatureRise";
@@ -17,14 +16,9 @@ function ClimateData() {
     globalTempRise: 'Yearly surface temperature rise from xxxx to xxxx'
   }
 
-  // useEffect(() => {
-  //   getAnnualGlobalCO2Data();
-  // }, []); 
-
    async function getAnnualGlobalCO2Data() {
     let temp = await getData(annualGlobalCO2url);
       setGlobalCO2Data(temp.data.readings);
-      // console.log(temp.data.readings);
       console.log(globalCO2Data);
   }
 
@@ -45,7 +39,7 @@ function ClimateData() {
 
   if (topic === "CO2") {
     getAnnualGlobalCO2Data();
-    listDataByYears = globalCO2Data.map((yearData) => ( // ERROR: Cannot read properties of undefined (reading 'readings')
+    listDataByYears = globalCO2Data.map((yearData) => ( 
       <li key={yearData.label}>
         {yearData.label + ": " + yearData.value + " t."}
       </li>
