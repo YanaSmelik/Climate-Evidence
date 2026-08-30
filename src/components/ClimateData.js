@@ -1,54 +1,94 @@
 import { useState, useEffect } from "react";
-import globalOceanTemperatureRise from "../data/globalOceanTemperatureRise";
 import globalSeaLevelRise from "../data/globalSeaLevelRise";
 import globalTemperatureRise from "../data/globalTemperatureRise";
 import Topics from "./Topics";
 
 function ClimateData() {
-  const[globalCO2Data, setGlobalCO2Data] = useState([]);
+  const [globalCO2Data, setGlobalCO2Data] = useState([]);
+  const [globalOceanTemperatureRise, setGlobalOceanTemperatureRise] = useState(
+    [],
+  );
+  const[globalSeaLevelRise, setGlobalSeaLeveRise] = useState([]);
   const [topic, setTopic] = useState("");
   let listDataByYears = [];
-   const annualGlobalCO2url = 'https://climatemonitor.info/api/public/v1/co2/annual_gl';
-   const topicDescription = {
-    CO2: 'Average carbon dioxide (CO₂) levels in the atmosphere worldwide from xxxx to xxxx',
-    oceanTempRise: 'Yearly global average sea surface temperature rise from xxxx to xxxx (in degrees Celsius)',
-    seaLevelRise: 'Yearly change in global mean sea level, as measured by satellite altimetry, from xxxx to xxxx',
-    globalTempRise: 'Yearly surface temperature rise from xxxx to xxxx'
-  }
+  const annualGlobalCO2url =
+    "https://climatemonitor.info/api/public/v1/co2/annual_gl";
+  const globalOceanTemperatureRiseUrl =
+    "https://climatemonitor.info/api/public/v1/ohc/annual";
+    const globalSeaLevelRiseUrl = "https://climatemonitor.info/api/public/v1/ocean/level";
+  const topicDescription = {
+    CO2: 'Carbon dioxide is the workhorse of the greenhouse effect - not the strongest molecule, but by far the most abundant and the longest-lived, which is why it dominates the warming story. The Mauna Loa record began in 1958, when Charles Keeling started measuring from a Hawaiian volcano; the sawtooth "Keeling curve" it traced - the planet breathing in and out each year as northern forests leaf out and fall bare - is one of the most famous graphs in science.',
+    oceanTempRise:
+      "For one honest gauge of global warming, watch the ocean: more than nine-tenths of the extra heat trapped by greenhouse gases ends up in seawater, not the air. That is why ocean heat content - measured in zettajoules, a billion trillion joules apiece - is among the least noisy climate signals there is. The sea has a very long memory, and lately it breaks its own record almost every year.",
+    seaLevelRise:
+      "Yearly change in global mean sea level, as measured by satellite altimetry, from xxxx to xxxx",
+    globalTempRise: "Yearly surface temperature rise from xxxx to xxxx",
+  };
 
-   async function getAnnualGlobalCO2Data() {
-    let temp = await getData(annualGlobalCO2url);
-      setGlobalCO2Data(temp.data.readings);
-      console.log(globalCO2Data);
-  }
-
-  async function getData(url){
-    try{
+  async function getData(url) {
+    try {
       const response = await fetch(url);
-      if(!response.ok) {
+      if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
 
       const result = await response.json();
       console.log(result);
       return result;
-    }catch(err) {
+    } catch (err) {
       console.log(err.message);
     }
   }
 
+  async function getAnnualGlobalCO2Data() {
+    let temp = await getData(annualGlobalCO2url);
+    setGlobalCO2Data(temp.data.readings);
+  }
+
+  async function getGlobalOceanTemperatureRiseData() {
+    let temp = await getData(globalOceanTemperatureRiseUrl);
+    setGlobalOceanTemperatureRise(temp.data.readings);
+  }
+
+   async function getSeaLevelRiseData() {
+    let temp = await getData(globalSeaLevelRiseUrl);
+    setGlobalSeaLeveRise(temp.data.readings);
+    processSeaLevelRiseData(globalSeaLevelRise);
+    console.log(globalSeaLevelRise);
+  }
+
+  //TODO: fix - redo
+  function processSeaLevelRiseData(data) {
+    let processedData = [];
+    data.forEach(element => {data.forEach(element => {
+      let year = element.label.substring(0, 3);
+      while(year !== element.label.substring(0, 3)){
+          processedData.push(year, element.value);
+          console.log(year, element.value);
+      }
+     
+    });
+    });
+    console.log(processedData);
+  }
+
+  useEffect(() => {
+    if (topic === "CO2") getAnnualGlobalCO2Data();
+    if (topic === "oceanTempRise") getGlobalOceanTemperatureRiseData();
+    if (topic === "seaLevelRise") getSeaLevelRiseData();
+  }, [topic]);
+
   if (topic === "CO2") {
-    getAnnualGlobalCO2Data();
-    listDataByYears = globalCO2Data.map((yearData) => ( 
+    listDataByYears = globalCO2Data.map((yearData) => (
       <li key={yearData.label}>
-        {yearData.label + ": " + yearData.value + " t."}
+        {yearData.label + ": " + yearData.value + " ppm"}
       </li>
     ));
   }
   if (topic === "oceanTempRise") {
     listDataByYears = globalOceanTemperatureRise.map((yearData) => (
-      <li key={yearData.year}>
-        {yearData.year + ": " + yearData.temperatureRise + " cm"}
+      <li key={yearData.label}>
+        {yearData.label + ": " + yearData.value + " ZJ"}
       </li>
     ));
   }
