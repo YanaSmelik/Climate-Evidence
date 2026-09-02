@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import globalSeaLevelRise from "../data/globalSeaLevelRise";
 import globalTemperatureRise from "../data/globalTemperatureRise";
 import Topics from "./Topics";
 
@@ -8,14 +7,14 @@ function ClimateData() {
   const [globalOceanTemperatureRise, setGlobalOceanTemperatureRise] = useState(
     [],
   );
-  const[globalSeaLevelRise, setGlobalSeaLeveRise] = useState([]);
+  const [globalSeaLevelRise, setGlobalSeaLeveRise] = useState([]);
   const [topic, setTopic] = useState("");
   let listDataByYears = [];
   const annualGlobalCO2url =
     "https://climatemonitor.info/api/public/v1/co2/annual_gl";
   const globalOceanTemperatureRiseUrl =
     "https://climatemonitor.info/api/public/v1/ohc/annual";
-    const globalSeaLevelRiseUrl = "https://climatemonitor.info/api/public/v1/ocean/level";
+  const globalSeaLevelRiseUrl = "https://climatemonitor.info/api/public/v1/ocean/level";
   const topicDescription = {
     CO2: 'Carbon dioxide is the workhorse of the greenhouse effect - not the strongest molecule, but by far the most abundant and the longest-lived, which is why it dominates the warming story. The Mauna Loa record began in 1958, when Charles Keeling started measuring from a Hawaiian volcano; the sawtooth "Keeling curve" it traced - the planet breathing in and out each year as northern forests leaf out and fall bare - is one of the most famous graphs in science.',
     oceanTempRise:
@@ -50,26 +49,35 @@ function ClimateData() {
     setGlobalOceanTemperatureRise(temp.data.readings);
   }
 
-   async function getSeaLevelRiseData() {
+  async function getSeaLevelRiseData() {
     let temp = await getData(globalSeaLevelRiseUrl);
     setGlobalSeaLeveRise(temp.data.readings);
-    processSeaLevelRiseData(globalSeaLevelRise);
     console.log(globalSeaLevelRise);
+    processSeaLevelRiseData(globalSeaLevelRise);
+
   }
 
-  //TODO: fix - redo
   function processSeaLevelRiseData(data) {
     let processedData = [];
-    data.forEach(element => {data.forEach(element => {
-      let year = element.label.substring(0, 3);
-      while(year !== element.label.substring(0, 3)){
-          processedData.push(year, element.value);
-          console.log(year, element.value);
+    for (let i = 0; i < data.length - 1; i++) {
+      const year = getYearFromData(data[i]);
+      if (year !== getYearFromData(data[i + 1])) {
+        processedData.push({ "year": year, "value": data[i].value });
       }
-     
-    });
-    });
-    console.log(processedData);
+    }
+    if (processedData.length > 0) {
+      const lastProcessedItem = processedData[processedData.length - 1];
+      const lastDataItem =  data[data.length - 1];
+      const lastYear = getYearFromData(lastDataItem);
+      if (lastProcessedItem.year !== lastYear) {
+        processedData.push({"year": lastYear, "value": lastDataItem.value});
+      }
+    }
+    return processedData;
+  }
+
+  function getYearFromData(item) {
+    return item.label.substring(0, 4);
   }
 
   useEffect(() => {
