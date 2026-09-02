@@ -68,7 +68,7 @@ function ClimateData() {
     for (let i = 0; i < data.length - 1; i++) {
       const year = getYearFromData(data[i]);
       if (year !== getYearFromData(data[i + 1])) {
-        processedData.push({ "year": year, "value": data[i].value });
+        processedData.push({ "label": year, "value": data[i].value });
       }
     }
     if (processedData.length > 0) {
@@ -76,7 +76,7 @@ function ClimateData() {
       const lastDataItem = data[data.length - 1];
       const lastYear = getYearFromData(lastDataItem);
       if (lastProcessedItem.year !== lastYear) {
-        processedData.push({ "year": lastYear, "value": lastDataItem.value });
+        processedData.push({ "label": lastYear, "value": lastDataItem.value });
       }
     }
     return processedData;
@@ -109,8 +109,8 @@ function ClimateData() {
   }
   if (topic === "seaLevelRise") {
     listDataByYears = globalSeaLevelRise.map((yearData) => (
-      <li key={yearData.year}>
-        {yearData.year + ": " + yearData.value + " mm"}
+      <li key={yearData.label}>
+        {yearData.label + ": " + yearData.value + " mm"}
       </li>
     ));
   }
