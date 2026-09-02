@@ -59,7 +59,6 @@ function ClimateData() {
 
   async function getGlobalTemperatureRiseData() {
     let response = await getData(globalTemperatureRiseUrl);
-    console.log(response);
     setGlobalTemperatureRise(response.data.readings);
   }
 
