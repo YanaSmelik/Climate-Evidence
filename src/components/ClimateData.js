@@ -27,65 +27,65 @@ function ClimateData() {
     globalTempRise: "Yearly surface temperature rise from xxxx to xxxx",
   };
 
-  async function getData(url) {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log(result);
-      return result;
-    } catch (err) {
-      console.log(err.message);
-    }
-  }
-
-  async function getAnnualGlobalCO2Data() {
-    let response = await getData(annualGlobalCO2url);
-    setGlobalCO2Data(response.data.readings);
-  }
-
-  async function getGlobalOceanTemperatureRiseData() {
-    let response = await getData(globalOceanTemperatureRiseUrl);
-    setGlobalOceanTemperatureRise(response.data.readings);
-  }
-
-  async function getSeaLevelRiseData() {
-    let response = await getData(globalSeaLevelRiseUrl);
-    setGlobalSeaLeveRise(processSeaLevelRiseData(response.data.readings));
-  }
-
-  async function getGlobalTemperatureRiseData() {
-    let response = await getData(globalTemperatureRiseUrl);
-    setGlobalTemperatureRise(response.data.readings);
-  }
-
-  function processSeaLevelRiseData(data) {
-    let processedData = [];
-    for (let i = 0; i < data.length - 1; i++) {
-      const year = getYearFromData(data[i]);
-      if (year !== getYearFromData(data[i + 1])) {
-        processedData.push({ "label": year, "value": data[i].value });
-      }
-    }
-    if (processedData.length > 0) {
-      const lastProcessedItem = processedData[processedData.length - 1];
-      const lastDataItem = data[data.length - 1];
-      const lastYear = getYearFromData(lastDataItem);
-      if (lastProcessedItem.year !== lastYear) {
-        processedData.push({ "label": lastYear, "value": lastDataItem.value });
-      }
-    }
-    return processedData;
-  }
-
-  function getYearFromData(item) {
-    return item.label.substring(0, 4);
-  }
-
   useEffect(() => {
+    async function getData(url) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+        return result;
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+
+    async function getAnnualGlobalCO2Data() {
+      let response = await getData(annualGlobalCO2url);
+      setGlobalCO2Data(response.data.readings);
+    }
+
+    async function getGlobalOceanTemperatureRiseData() {
+      let response = await getData(globalOceanTemperatureRiseUrl);
+      setGlobalOceanTemperatureRise(response.data.readings);
+    }
+
+    async function getSeaLevelRiseData() {
+      let response = await getData(globalSeaLevelRiseUrl);
+      setGlobalSeaLeveRise(processSeaLevelRiseData(response.data.readings));
+    }
+
+    async function getGlobalTemperatureRiseData() {
+      let response = await getData(globalTemperatureRiseUrl);
+      setGlobalTemperatureRise(response.data.readings);
+    }
+
+    function processSeaLevelRiseData(data) {
+      let processedData = [];
+      for (let i = 0; i < data.length - 1; i++) {
+        const year = getYearFromData(data[i]);
+        if (year !== getYearFromData(data[i + 1])) {
+          processedData.push({ "label": year, "value": data[i].value });
+        }
+      }
+      if (processedData.length > 0) {
+        const lastProcessedItem = processedData[processedData.length - 1];
+        const lastDataItem = data[data.length - 1];
+        const lastYear = getYearFromData(lastDataItem);
+        if (lastProcessedItem.year !== lastYear) {
+          processedData.push({ "label": lastYear, "value": lastDataItem.value });
+        }
+      }
+      return processedData;
+    }
+
+    function getYearFromData(item) {
+      return item.label.substring(0, 4);
+    }
+
     if (topic === "CO2") getAnnualGlobalCO2Data();
     if (topic === "oceanTempRise") getGlobalOceanTemperatureRiseData();
     if (topic === "seaLevelRise") getSeaLevelRiseData();
