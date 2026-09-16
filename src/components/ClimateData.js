@@ -131,7 +131,7 @@ function ClimateData() {
       <h1>Climate Change Data</h1>
       <Topics setTopic={setTopic} />
       <p>{topicDescription[topic]}</p>
-      <Chart data={fetchedData}/>
+      <Chart data={fetchedData} topic={topic}/>
       <ul>{listDataByYears}</ul>
     </div>
   );
