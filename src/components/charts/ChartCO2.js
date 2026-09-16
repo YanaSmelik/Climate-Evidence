@@ -1,4 +1,4 @@
-import { Line, LineChart } from 'recharts';
+import { CartesianGrid, Line, Legend, LineChart, XAxis, YAxis } from 'recharts';
 
 const data = [
     {
@@ -42,7 +42,11 @@ const data = [
 export default function Step1() {
     return (
         <LineChart style={{ width: '100%', aspectRatio: 1.618, maxWidth: 600 }} responsive data={data}>
+            <CartesianGrid />
             <Line dataKey="uv" />
+            <XAxis />
+            <YAxis />
+            <Legend />
         </LineChart>
     );
 }
