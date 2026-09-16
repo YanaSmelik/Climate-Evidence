@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Step1 from "./charts/ChartCO2";
 import Topics from "./Topics";
 
 function ClimateData() {
@@ -10,6 +11,7 @@ function ClimateData() {
   const [globalTemperatureRise, setGlobalTemperatureRise] = useState([]);
   const [topic, setTopic] = useState("");
   let listDataByYears = [];
+  let fetchedData=[];
 
   const annualGlobalCO2url =
     "https://climatemonitor.info/api/public/v1/co2/annual_gl";
@@ -24,7 +26,7 @@ function ClimateData() {
       "For one honest gauge of global warming, watch the ocean: more than nine-tenths of the extra heat trapped by greenhouse gases ends up in seawater, not the air. That is why ocean heat content - measured in zettajoules, a billion trillion joules apiece - is among the least noisy climate signals there is. The sea has a very long memory, and lately it breaks its own record almost every year.",
     seaLevelRise:
       "The sea rises for two reasons at once: water expands as it warms, and melting land ice pours in fresh volume. Satellites have tracked the global average from orbit since 1993, to within a few millimetres. A few millimetres a year sounds trivial - until you remember it is averaged across the whole ocean, and the rate has more than doubled since the record began",
-    globalTempRise: "Yearly surface temperature rise from xxxx to xxxx",
+    globalTempRise: "The surface temperature anomaly is the headline number - how much warmer the planet is than a mid-20th-century normal, land and ocean together. Anomalies are used instead of raw temperatures because a departure from average travels well: a mild winter in Siberia and a warm night in the tropics can be added up honestly. Every year since 2015 now ranks among the warmest on record.",
   };
 
   useEffect(() => {
@@ -36,7 +38,6 @@ function ClimateData() {
         }
 
         const result = await response.json();
-        console.log(result);
         return result;
       } catch (err) {
         console.log(err.message);
@@ -93,6 +94,7 @@ function ClimateData() {
   }, [topic]);
 
   if (topic === "CO2") {
+    fetchedData = globalCO2Data ?? [];
     listDataByYears = globalCO2Data.map((yearData) => (
       <li key={yearData.label}>
         {yearData.label + ": " + yearData.value + " ppm"}
@@ -100,6 +102,7 @@ function ClimateData() {
     ));
   }
   if (topic === "oceanTempRise") {
+    fetchedData = globalOceanTemperatureRise ?? [];
     listDataByYears = globalOceanTemperatureRise.map((yearData) => (
       <li key={yearData.label}>
         {yearData.label + ": " + yearData.value + " ZJ"}
@@ -107,6 +110,7 @@ function ClimateData() {
     ));
   }
   if (topic === "seaLevelRise") {
+    fetchedData = globalSeaLevelRise ?? [];
     listDataByYears = globalSeaLevelRise.map((yearData) => (
       <li key={yearData.label}>
         {yearData.label + ": " + yearData.value + " mm"}
@@ -114,6 +118,7 @@ function ClimateData() {
     ));
   }
   if (topic === "globalTempRise") {
+    fetchedData = globalTemperatureRise ?? [];
     listDataByYears = globalTemperatureRise.map((yearData) => (
       <li key={yearData.label}>
         {yearData.label + ": " + yearData.value + " °C"}
@@ -126,6 +131,7 @@ function ClimateData() {
       <h1>Climate Change Data</h1>
       <Topics setTopic={setTopic} />
       <p>{topicDescription[topic]}</p>
+      <Step1 data={fetchedData}/>
       <ul>{listDataByYears}</ul>
     </div>
   );
