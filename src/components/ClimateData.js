@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Step1 from "./charts/ChartCO2";
+import Chart from "./Chart";
 import Topics from "./Topics";
 
 function ClimateData() {
@@ -131,7 +131,7 @@ function ClimateData() {
       <h1>Climate Change Data</h1>
       <Topics setTopic={setTopic} />
       <p>{topicDescription[topic]}</p>
-      <Step1 data={fetchedData}/>
+      <Chart data={fetchedData}/>
       <ul>{listDataByYears}</ul>
     </div>
   );
