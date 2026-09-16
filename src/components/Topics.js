@@ -1,3 +1,5 @@
+import styles from '../style/topics.module.css';
+
 function Topics(props) {
   let topicButtons = [
     {
@@ -20,6 +22,7 @@ function Topics(props) {
 
   const topicButtonsJSX = topicButtons.map((topic) => {
     return (
+      <li>
       <button key={topic.nameAttribute}
         onClick={(event) => {
           props.setTopic(event.target.name);
@@ -28,12 +31,15 @@ function Topics(props) {
       >
         {topic.buttonName}
       </button>
+      </li>
     );
   });
 
   return (
     <div>
+    <ul  className={styles.sideBar}>
      {topicButtonsJSX}
+     </ul>
     </div>
   );
 }
