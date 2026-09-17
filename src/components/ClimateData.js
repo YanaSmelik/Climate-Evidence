@@ -11,7 +11,7 @@ function ClimateData() {
   );
   const [globalSeaLevelRise, setGlobalSeaLeveRise] = useState([]);
   const [globalTemperatureRise, setGlobalTemperatureRise] = useState([]);
-  const [topic, setTopic] = useState("");
+  // const [topic, setTopic] = useState("");
   let listDataByYears = [];
   let fetchedData = [];
 
@@ -135,7 +135,7 @@ function ClimateData() {
     <div className={styles.dataContainer}>
       <h1>Climate Change Data</h1>
       <div className={styles.dataContent}>
-        <Topics setTopic={setTopic} />
+        {/* <Topics setTopic={setTopic} /> */}
         <div>
           <img src={co2Banner}></img>
           <p>{topicDescription[topic]}</p>
