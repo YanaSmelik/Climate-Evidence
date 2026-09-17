@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Chart from "./Chart";
 import Topics from "./Topics";
+import styles from "../style/climateData.module.css";
+import co2Banner from '../media/co2-banner.jpg';
 
 function ClimateData() {
   const [globalCO2Data, setGlobalCO2Data] = useState([]);
@@ -11,14 +13,16 @@ function ClimateData() {
   const [globalTemperatureRise, setGlobalTemperatureRise] = useState([]);
   const [topic, setTopic] = useState("");
   let listDataByYears = [];
-  let fetchedData=[];
+  let fetchedData = [];
 
   const annualGlobalCO2url =
     "https://climatemonitor.info/api/public/v1/co2/annual_gl";
   const globalOceanTemperatureRiseUrl =
     "https://climatemonitor.info/api/public/v1/ohc/annual";
-  const globalSeaLevelRiseUrl = "https://climatemonitor.info/api/public/v1/ocean/level";
-  const globalTemperatureRiseUrl = "https://climatemonitor.info/api/public/v1/temp/annual_anomaly";
+  const globalSeaLevelRiseUrl =
+    "https://climatemonitor.info/api/public/v1/ocean/level";
+  const globalTemperatureRiseUrl =
+    "https://climatemonitor.info/api/public/v1/temp/annual_anomaly";
 
   const topicDescription = {
     CO2: 'Carbon dioxide is the workhorse of the greenhouse effect - not the strongest molecule, but by far the most abundant and the longest-lived, which is why it dominates the warming story. The Mauna Loa record began in 1958, when Charles Keeling started measuring from a Hawaiian volcano; the sawtooth "Keeling curve" it traced - the planet breathing in and out each year as northern forests leaf out and fall bare - is one of the most famous graphs in science.',
@@ -26,7 +30,8 @@ function ClimateData() {
       "For one honest gauge of global warming, watch the ocean: more than nine-tenths of the extra heat trapped by greenhouse gases ends up in seawater, not the air. That is why ocean heat content - measured in zettajoules, a billion trillion joules apiece - is among the least noisy climate signals there is. The sea has a very long memory, and lately it breaks its own record almost every year.",
     seaLevelRise:
       "The sea rises for two reasons at once: water expands as it warms, and melting land ice pours in fresh volume. Satellites have tracked the global average from orbit since 1993, to within a few millimetres. A few millimetres a year sounds trivial - until you remember it is averaged across the whole ocean, and the rate has more than doubled since the record began",
-    globalTempRise: "The surface temperature anomaly is the headline number - how much warmer the planet is than a mid-20th-century normal, land and ocean together. Anomalies are used instead of raw temperatures because a departure from average travels well: a mild winter in Siberia and a warm night in the tropics can be added up honestly. Every year since 2015 now ranks among the warmest on record.",
+    globalTempRise:
+      "The surface temperature anomaly is the headline number - how much warmer the planet is than a mid-20th-century normal, land and ocean together. Anomalies are used instead of raw temperatures because a departure from average travels well: a mild winter in Siberia and a warm night in the tropics can be added up honestly. Every year since 2015 now ranks among the warmest on record.",
   };
 
   useEffect(() => {
@@ -69,7 +74,7 @@ function ClimateData() {
       for (let i = 0; i < data.length - 1; i++) {
         const year = getYearFromData(data[i]);
         if (year !== getYearFromData(data[i + 1])) {
-          processedData.push({ "label": year, "value": data[i].value });
+          processedData.push({ label: year, value: data[i].value });
         }
       }
       if (processedData.length > 0) {
@@ -77,7 +82,7 @@ function ClimateData() {
         const lastDataItem = data[data.length - 1];
         const lastYear = getYearFromData(lastDataItem);
         if (lastProcessedItem.year !== lastYear) {
-          processedData.push({ "label": lastYear, "value": lastDataItem.value });
+          processedData.push({ label: lastYear, value: lastDataItem.value });
         }
       }
       return processedData;
@@ -127,12 +132,17 @@ function ClimateData() {
   }
 
   return (
-    <div>
+    <div className={styles.dataContainer}>
       <h1>Climate Change Data</h1>
-      <Topics setTopic={setTopic} />
-      <p>{topicDescription[topic]}</p>
-      <Chart data={fetchedData} topic={topic}/>
-      <ul>{listDataByYears}</ul>
+      <div className={styles.dataContent}>
+        <Topics setTopic={setTopic} />
+        <div>
+          <img src={co2Banner}></img>
+          <p>{topicDescription[topic]}</p>
+          <Chart data={fetchedData} topic={topic} />
+          <ul>{listDataByYears}</ul>
+        </div>
+      </div>
     </div>
   );
 }
