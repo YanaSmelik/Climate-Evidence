@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import Chart from "./Chart";
-import Topics from "./Topics";
 import styles from "../style/climateData.module.css";
 import co2Banner from '../media/co2-banner.jpg';
 
-function ClimateData() {
+function ClimateData(props) {
   const [globalCO2Data, setGlobalCO2Data] = useState([]);
   const [globalOceanTemperatureRise, setGlobalOceanTemperatureRise] = useState(
     [],
   );
   const [globalSeaLevelRise, setGlobalSeaLeveRise] = useState([]);
   const [globalTemperatureRise, setGlobalTemperatureRise] = useState([]);
-  // const [topic, setTopic] = useState("");
   let listDataByYears = [];
   let fetchedData = [];
 
@@ -92,13 +90,13 @@ function ClimateData() {
       return item.label.substring(0, 4);
     }
 
-    if (topic === "CO2") getAnnualGlobalCO2Data();
-    if (topic === "oceanTempRise") getGlobalOceanTemperatureRiseData();
-    if (topic === "seaLevelRise") getSeaLevelRiseData();
-    if (topic === "globalTempRise") getGlobalTemperatureRiseData();
-  }, [topic]);
+    if (props.topic === "CO2") getAnnualGlobalCO2Data();
+    if (props.topic === "oceanTempRise") getGlobalOceanTemperatureRiseData();
+    if (props.topic === "seaLevelRise") getSeaLevelRiseData();
+    if (props.topic === "globalTempRise") getGlobalTemperatureRiseData();
+  }, [props.topic]);
 
-  if (topic === "CO2") {
+  if (props.topic === "CO2") {
     fetchedData = globalCO2Data ?? [];
     listDataByYears = globalCO2Data.map((yearData) => (
       <li key={yearData.label}>
@@ -106,7 +104,7 @@ function ClimateData() {
       </li>
     ));
   }
-  if (topic === "oceanTempRise") {
+  if (props.topic === "oceanTempRise") {
     fetchedData = globalOceanTemperatureRise ?? [];
     listDataByYears = globalOceanTemperatureRise.map((yearData) => (
       <li key={yearData.label}>
@@ -114,7 +112,7 @@ function ClimateData() {
       </li>
     ));
   }
-  if (topic === "seaLevelRise") {
+  if (props.topic === "seaLevelRise") {
     fetchedData = globalSeaLevelRise ?? [];
     listDataByYears = globalSeaLevelRise.map((yearData) => (
       <li key={yearData.label}>
@@ -122,7 +120,7 @@ function ClimateData() {
       </li>
     ));
   }
-  if (topic === "globalTempRise") {
+  if (props.topic === "globalTempRise") {
     fetchedData = globalTemperatureRise ?? [];
     listDataByYears = globalTemperatureRise.map((yearData) => (
       <li key={yearData.label}>
@@ -135,11 +133,10 @@ function ClimateData() {
     <div className={styles.dataContainer}>
       <h1>Climate Change Data</h1>
       <div className={styles.dataContent}>
-        {/* <Topics setTopic={setTopic} /> */}
         <div>
           <img src={co2Banner}></img>
-          <p>{topicDescription[topic]}</p>
-          <Chart data={fetchedData} topic={topic} />
+          <p>{topicDescription[props.topic]}</p>
+          <Chart data={fetchedData} topic={props.topic} />
           <ul>{listDataByYears}</ul>
         </div>
       </div>
