@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import Chart from "./Chart";
 import styles from "../style/climateData.module.css";
-import co2Banner from '../media/co2-banner.jpg';
+import co2Banner from "../media/co2-banner.jpg";
+import oceanBanner from "../media/ocean-banner.jpg";
+import seaLevelBanner from "../media/sealevel-banner.jpg";
+import temperatureBanner from "../media/temperature-banner.jpg";
 
 function ClimateData(props) {
   const [globalCO2Data, setGlobalCO2Data] = useState([]);
@@ -30,6 +33,13 @@ function ClimateData(props) {
       "The sea rises for two reasons at once: water expands as it warms, and melting land ice pours in fresh volume. Satellites have tracked the global average from orbit since 1993, to within a few millimetres. A few millimetres a year sounds trivial - until you remember it is averaged across the whole ocean, and the rate has more than doubled since the record began",
     globalTempRise:
       "The surface temperature anomaly is the headline number - how much warmer the planet is than a mid-20th-century normal, land and ocean together. Anomalies are used instead of raw temperatures because a departure from average travels well: a mild winter in Siberia and a warm night in the tropics can be added up honestly. Every year since 2015 now ranks among the warmest on record.",
+  };
+
+  const banner = {
+    CO2: co2Banner,
+    oceanTempRise: oceanBanner,
+    seaLevelRise: seaLevelBanner,
+    globalTempRise: temperatureBanner,
   };
 
   useEffect(() => {
@@ -133,12 +143,10 @@ function ClimateData(props) {
     <div className={styles.dataContainer}>
       <h1>Climate Change Data</h1>
       <div className={styles.dataContent}>
-        <div>
-          <img src={co2Banner}></img>
-          <p>{topicDescription[props.topic]}</p>
-          <Chart data={fetchedData} topic={props.topic} />
-          <ul>{listDataByYears}</ul>
-        </div>
+        <img src={banner[props.topic]}></img>
+        <p>{topicDescription[props.topic]}</p>
+        <Chart data={fetchedData} topic={props.topic} />
+        <ul>{listDataByYears}</ul>
       </div>
     </div>
   );
