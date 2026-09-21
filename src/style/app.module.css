@@ -1,0 +1,13 @@
+.appSection{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.mainSection{
+    display: flex;
+}
+
+.topicsSection{
+    width: 500px;
+}
