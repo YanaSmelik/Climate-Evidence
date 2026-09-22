@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Chart from "./Chart";
 import styles from "../style/climateData.module.css";
+// import classNames from "classnames";
 // import co2Banner from "../media/co2-banner.jpg";
 // import oceanBanner from "../media/ocean-banner.jpg";
 // import seaLevelBanner from "../media/sealevel-banner.jpg";
@@ -35,12 +36,14 @@ function ClimateData(props) {
       "The surface temperature anomaly is the headline number - how much warmer the planet is than a mid-20th-century normal, land and ocean together. Anomalies are used instead of raw temperatures because a departure from average travels well: a mild winter in Siberia and a warm night in the tropics can be added up honestly. Every year since 2015 now ranks among the warmest on record.",
   };
 
-  // const banner = {
-  //   CO2: co2Banner,
-  //   oceanTempRise: oceanBanner,
-  //   seaLevelRise: seaLevelBanner,
-  //   globalTempRise: temperatureBanner,
-  // };
+
+  
+  const banner = {
+    CO2: "co2-banner",
+    oceanTempRise: "ocean-banner",
+    seaLevelRise: "seaLevel-banner",
+    globalTempRise: "temperature-banner",
+  };
 
   useEffect(() => {
     async function getData(url) {
@@ -142,15 +145,15 @@ function ClimateData(props) {
   return (
     <div className={styles.mainSection}>
 
-      <div className={styles.bannerContainer}>
+{/* TODO: fix banner class  */}
+      <div className={styles[banner]}>
 
-        <div className={styles.bannerContent}>
+        <div className={styles["banner-content"]}>
           <h1>Climate Change Data</h1>
         </div>
       </div>
 
       <div className={styles.dataSection}>
-        {/* <img src={banner[props.topic]} alt="topic banner"></img> */}
         <p>{topicDescription[props.topic]}</p>
         <Chart data={fetchedData} topic={props.topic} />
         <ul>{listDataByYears}</ul>
