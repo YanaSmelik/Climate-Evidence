@@ -43,12 +43,12 @@ function ClimateData(props) {
   };
 
   const bannerStyle = {
-    backgroundImage: `url(${banner[props.topic]})`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(${banner[props.topic]})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     position: 'relative',
     width: '100%',
-    paddingTop: '40%',
+    paddingTop: '20%',
     color: 'white',
   };
 
