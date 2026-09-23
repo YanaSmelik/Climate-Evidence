@@ -37,7 +37,7 @@ function Chart(props) {
 
   return (
     <LineChart
-      style={{ width: "100%", aspectRatio: 1.618, maxWidth: 600 }}
+      style={{ width: "100%", aspectRatio: 1.618, maxWidth: 1000 }}
       responsive
       data={props.data}
       margin={{

@@ -142,7 +142,7 @@ function ClimateData(props) {
   if (props.topic === "globalTempRise") {
     fetchedData = globalTemperatureRise ?? [];
   }
-//TODO: fix flex item widths ratio of dataSection
+
   return (
     <div className={styles.mainSection}>
 
@@ -154,7 +154,9 @@ function ClimateData(props) {
       </div>
 
       <div className={styles.dataSection}>
-        <Chart className={styles.chartSection} data={fetchedData} topic={props.topic} />
+      <div className={styles.chartSection}>
+        <Chart data={fetchedData} topic={props.topic} />
+        </div>
         <div className={styles.descriptionSection}>
           <p>{topicDescription[props.topic]}</p>
         </div>
