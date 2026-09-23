@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import Chart from "./Chart";
 import styles from "../style/climateData.module.css";
-// import classNames from "classnames";
-// import co2Banner from "../media/co2-banner.jpg";
-// import oceanBanner from "../media/ocean-banner.jpg";
-// import seaLevelBanner from "../media/sealevel-banner.jpg";
-// import temperatureBanner from "../media/temperature-banner.jpg";
+import co2Banner from "../media/co2-banner.jpg";
+import oceanBanner from "../media/ocean-banner.jpg";
+import seaLevelBanner from "../media/sealevel-banner.jpg";
+import temperatureBanner from "../media/temperature-banner.jpg";
 
 function ClimateData(props) {
   const [globalCO2Data, setGlobalCO2Data] = useState([]);
@@ -36,13 +35,21 @@ function ClimateData(props) {
       "The surface temperature anomaly is the headline number - how much warmer the planet is than a mid-20th-century normal, land and ocean together. Anomalies are used instead of raw temperatures because a departure from average travels well: a mild winter in Siberia and a warm night in the tropics can be added up honestly. Every year since 2015 now ranks among the warmest on record.",
   };
 
-
-  
   const banner = {
-    CO2: "co2-banner",
-    oceanTempRise: "ocean-banner",
-    seaLevelRise: "seaLevel-banner",
-    globalTempRise: "temperature-banner",
+    CO2: co2Banner,
+    oceanTempRise: oceanBanner,
+    seaLevelRise: seaLevelBanner,
+    globalTempRise: temperatureBanner,
+  };
+
+  const bannerStyle = {
+    backgroundImage: `url(${banner[props.topic]})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'relative',
+    width: '100%',
+    paddingTop: '40%',
+    color: 'white',
   };
 
   useEffect(() => {
@@ -103,10 +110,18 @@ function ClimateData(props) {
       return item.label.substring(0, 4);
     }
 
-    if (props.topic === "CO2") getAnnualGlobalCO2Data();
-    if (props.topic === "oceanTempRise") getGlobalOceanTemperatureRiseData();
-    if (props.topic === "seaLevelRise") getSeaLevelRiseData();
-    if (props.topic === "globalTempRise") getGlobalTemperatureRiseData();
+    if (props.topic === "CO2") {
+      getAnnualGlobalCO2Data();
+    }
+    if (props.topic === "oceanTempRise") {
+      getGlobalOceanTemperatureRiseData();
+    }
+    if (props.topic === "seaLevelRise") {
+      getSeaLevelRiseData();
+    }
+    if (props.topic === "globalTempRise") {
+      getGlobalTemperatureRiseData();
+    }
   }, [props.topic]);
 
   if (props.topic === "CO2") {
@@ -145,8 +160,8 @@ function ClimateData(props) {
   return (
     <div className={styles.mainSection}>
 
-{/* TODO: fix banner class  */}
-      <div className={styles[banner]}>
+      {/* TODO: fix banner class  */}
+      <div style={bannerStyle}>
 
         <div className={styles["banner-content"]}>
           <h1>Climate Change Data</h1>

@@ -1,15 +1,6 @@
 .dataSection {
     display: flex;
 }
-.banner-container {
-    background-image: url('../media/co2-banner.jpg');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    width: 100%;
-    padding-top: 40%;
-    color: white;
-}
 
 .banner-content{
     position: absolute;
@@ -17,44 +8,4 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-}
-
-.co2-banner{
-     background-image: url('../media/co2-banner.jpg');
-      background-size: cover;
-    background-position: center;
-    position: relative;
-    width: 100%;
-    padding-top: 40%;
-    color: white;
-}
-
-.ocean-banner{
-     background-image: url('../media/ocean-banner.jpg');
-      background-size: cover;
-    background-position: center;
-    position: relative;
-    width: 100%;
-    padding-top: 40%;
-    color: white;
-}
-
-.sealevel-banner{
-     background-image: url('../media/sealevel-banner.jpg');
-      background-size: cover;
-    background-position: center;
-    position: relative;
-    width: 100%;
-    padding-top: 40%;
-    color: white;
-}
-
-.temperature-banner{
-     background-image: url('../media/temperature-banner.jpg');
-      background-size: cover;
-    background-position: center;
-    position: relative;
-    width: 100%;
-    padding-top: 40%;
-    color: white;
 }
