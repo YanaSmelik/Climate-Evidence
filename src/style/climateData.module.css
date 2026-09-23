@@ -9,3 +9,11 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+
+.chartSection{
+    flex: 0 0 60%;
+}
+
+.descriptionSection{
+     flex: 0 0 40%;
+}

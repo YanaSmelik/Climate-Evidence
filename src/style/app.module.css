@@ -1,13 +1,18 @@
-.appSection{
+.appSection {
     display: flex;
     flex-direction: column;
 }
 
 
-.mainSection{
+.mainSection {
     display: flex;
+    margin-top: 1vw;
 }
 
-.topicsSection{
-    width: 500px;
+.topicsSection {
+    flex: 0 0 250px;
+}
+
+.climateDataSection {
+    flex: 1 1 0%;
 }

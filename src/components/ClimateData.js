@@ -13,7 +13,6 @@ function ClimateData(props) {
   );
   const [globalSeaLevelRise, setGlobalSeaLeveRise] = useState([]);
   const [globalTemperatureRise, setGlobalTemperatureRise] = useState([]);
-  let listDataByYears = [];
   let fetchedData = [];
 
   const annualGlobalCO2url =
@@ -41,6 +40,13 @@ function ClimateData(props) {
     seaLevelRise: seaLevelBanner,
     globalTempRise: temperatureBanner,
   };
+
+  const bannerText = {
+    CO2: "Carbon Dioxide (CO2) Data",
+    oceanTempRise: "Ocean Heat Data",
+    seaLevelRise: "Sea Level Data",
+    globalTempRise: "Global Temperature Data",
+  }
 
   const bannerStyle = {
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(${banner[props.topic]})`,
@@ -126,52 +132,32 @@ function ClimateData(props) {
 
   if (props.topic === "CO2") {
     fetchedData = globalCO2Data ?? [];
-    listDataByYears = globalCO2Data.map((yearData) => (
-      <li key={yearData.label}>
-        {yearData.label + ": " + yearData.value + " ppm"}
-      </li>
-    ));
   }
   if (props.topic === "oceanTempRise") {
     fetchedData = globalOceanTemperatureRise ?? [];
-    listDataByYears = globalOceanTemperatureRise.map((yearData) => (
-      <li key={yearData.label}>
-        {yearData.label + ": " + yearData.value + " ZJ"}
-      </li>
-    ));
   }
   if (props.topic === "seaLevelRise") {
     fetchedData = globalSeaLevelRise ?? [];
-    listDataByYears = globalSeaLevelRise.map((yearData) => (
-      <li key={yearData.label}>
-        {yearData.label + ": " + yearData.value + " mm"}
-      </li>
-    ));
   }
   if (props.topic === "globalTempRise") {
     fetchedData = globalTemperatureRise ?? [];
-    listDataByYears = globalTemperatureRise.map((yearData) => (
-      <li key={yearData.label}>
-        {yearData.label + ": " + yearData.value + " °C"}
-      </li>
-    ));
   }
-
+//TODO: fix flex item widths ratio of dataSection
   return (
     <div className={styles.mainSection}>
 
-      {/* TODO: fix banner class  */}
       <div style={bannerStyle}>
 
         <div className={styles["banner-content"]}>
-          <h1>Climate Change Data</h1>
+          <h1>{bannerText[props.topic]}</h1>
         </div>
       </div>
 
       <div className={styles.dataSection}>
-        <p>{topicDescription[props.topic]}</p>
-        <Chart data={fetchedData} topic={props.topic} />
-        <ul>{listDataByYears}</ul>
+        <Chart className={styles.chartSection} data={fetchedData} topic={props.topic} />
+        <div className={styles.descriptionSection}>
+          <p>{topicDescription[props.topic]}</p>
+        </div>
       </div>
     </div>
   );
