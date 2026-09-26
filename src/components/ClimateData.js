@@ -50,20 +50,20 @@ function ClimateData(props) {
     oceanTempRise: "Ocean Heat Data",
     seaLevelRise: "Sea Level Data",
     globalTempRise: "Global Temperature Data",
-  }
+  };
 
   const bannerStyle = {
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(${banner[props.topic]})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    position: 'relative',
-    width: '100%',
-    paddingTop: '20%',
-    color: 'white',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    position: "relative",
+    width: "100%",
+    paddingTop: "20%",
+    color: "white",
   };
 
   const article = {
-    CO2: <CO2Data/>,
+    CO2: <CO2Data />,
     oceanTempRise: <OceanTempRiseData />,
     seaLevelRise: <SeaLevelRiseData />,
     globalTempRise: <GlobalTempRiseData />,
@@ -156,25 +156,21 @@ function ClimateData(props) {
 
   return (
     <div className={styles.mainSection}>
-
       <div style={bannerStyle}>
-
         <div className={styles["banner-content"]}>
           <h1>{bannerText[props.topic]}</h1>
         </div>
       </div>
 
       <div className={styles.dataSection}>
-      <div className={styles.chartSection}>
-        <Chart data={fetchedData} topic={props.topic} />
-        </div>
         <div className={styles.descriptionSection}>
           <p>{topicDescription[props.topic]}</p>
         </div>
+         <div className={styles.chartSection}>
+          <Chart data={fetchedData} topic={props.topic} />
+        </div>
       </div>
-      <div className={styles.articleSection}>
-          {article[props.topic]}
-          </div>
+      <div className={styles.articleSection}>{article[props.topic]}</div>
     </div>
   );
 }
