@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import Chart from "./Chart";
 import CO2Data from "./articles/CO2Data";
+import GlobalTempRiseData from "./articles/GlobalTempRiseData";
+import OceanTempRiseData from "./articles/OceanTempRiseData";
+import SeaLevelRiseData from "./articles/SeaLevelRiseData";
 import styles from "../style/climateData.module.css";
 import co2Banner from "../media/co2-banner.jpg";
 import oceanBanner from "../media/ocean-banner.jpg";
@@ -57,6 +60,13 @@ function ClimateData(props) {
     width: '100%',
     paddingTop: '20%',
     color: 'white',
+  };
+
+  const article = {
+    CO2: <CO2Data/>,
+    oceanTempRise: <OceanTempRiseData />,
+    seaLevelRise: <SeaLevelRiseData />,
+    globalTempRise: <GlobalTempRiseData />,
   };
 
   useEffect(() => {
@@ -160,11 +170,11 @@ function ClimateData(props) {
         </div>
         <div className={styles.descriptionSection}>
           <p>{topicDescription[props.topic]}</p>
-          <div className={styles.articleSection}>
-          <CO2Data />
-          </div>
         </div>
       </div>
+      <div className={styles.articleSection}>
+          {article[props.topic]}
+          </div>
     </div>
   );
 }
